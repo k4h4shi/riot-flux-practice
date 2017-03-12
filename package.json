@@ -18,6 +18,7 @@
     "browserify": "^14.1.0",
     "chokidar-cli": "^1.2.0",
     "riot": "^3.3.1",
+    "riotcontrol": "0.0.3",
     "riotify": "^2.0.0"
   }
 }
