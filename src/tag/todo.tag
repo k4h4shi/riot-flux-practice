@@ -3,7 +3,7 @@
   <h3>{ opts.title }</h3>
 
   <ul>
-    <li each={ task in todos }>
+    <li each={ task in todo.tasks }>
       <todo-item task={ task } ></todo-item>
     </li>
   </ul>
@@ -11,7 +11,7 @@
   <form onsubmit={ add }>
     <input name="input" onkeyup={ edit }>
     <button disabled={ !text } >Add</button>
-    <button type="button" disabled={ completed == 0 } onclick={ remove }>Clear</button>  
+    <button type="button" disabled={ todo.completed == 0 } onclick={ remove }>Clear</button>  
   </form>
 
   <script>
@@ -20,21 +20,15 @@
 
     var self = this
     self.disabled = true
-    self.todos = {}
-    self.completed = 0
+    self.todo = {}
 
     self.on('mount', function() {
       RiotControl.trigger('todo_init') 
     })
  
     // Register a listener to store change events
-    RiotControl.on('todo_changed', function(todos){
-      self.todos = todos
-      for (let id in todos) {
-        if (self.todos[id].done) {
-          self.completed++
-        }
-      }
+    RiotControl.on('todo_changed', function(todo){
+      self.todo = todo
       self.update()
     })
 
