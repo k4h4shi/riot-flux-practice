@@ -23,7 +23,7 @@
     self.todo = {}
 
     self.on('mount', function() {
-      RiotControl.trigger('todo_init') 
+      TodoActions.fetchTodos()
     })
  
     // Register a listener to store change events
