@@ -1,5 +1,6 @@
 Logger = require('../utils/Logger.js')
 RiotControl = require('../riotcontrol')
+
 TodoActions = {
   name:  "TodoActions",
 
@@ -24,7 +25,7 @@ TodoActions = {
     RiotControl.trigger('todo_remove', task)
   },
   removeCompleted() {
-    Logger.logging(this.name, 'todo_removeCompleted', task)
+    Logger.logging(this.name, 'todo_removeCompleted')
     RiotControl.trigger('todo_removeCompleted')
   }
   

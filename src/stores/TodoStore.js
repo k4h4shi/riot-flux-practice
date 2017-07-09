@@ -10,6 +10,7 @@ TodoStore = function() {
   this.on('todo_fill', function(tasks) {
     Logger.logging(this.constructor.name, 'todo_fill', tasks)
     this.todo = { tasks: tasks, completed: 0 }
+    this.countCompleted()
     this.trigger('todo_changed', this.todo)
   })
 
@@ -24,25 +25,14 @@ TodoStore = function() {
   this.on('todo_toggle', function(task) {
     Logger.logging(this.constructor.name, 'todo_toggle', task)
     this.todo.tasks[task.id].done = !this.todo.tasks[task.id].done
-    this.todo.completed = 0
-    for (var id in this.todo.tasks) {
-        if (this.todo.tasks[id].done) {
-          this.todo.completed++
-        }
-    }
+    this.countCompleted()
     this.trigger('todo_changed', this.todo)
   })
 
   this.on('todo_remove', function(task) {
     Logger.logging(this.constructor.name, 'todo_remove', task)
     delete this.todo.tasks[task.id]
-
-    this.todo.completed = 0
-    for (var id in this.todo.tasks) {
-        if (this.todo.tasks[id].done) {
-          this.todo.completed++
-        }
-    }
+    this.countCompleted()
     this.trigger('todo_changed', this.todo)
   }) 
 
@@ -55,6 +45,15 @@ TodoStore = function() {
     }
     this.trigger('todo_changed', this.todo)
   })
+
+  this.countCompleted = function() {
+    this.todo.completed = 0
+    for (var id in this.todo.tasks) {
+        if (this.todo.tasks[id].done) {
+          this.todo.completed++
+        }
+    }
+  }
 
 }
 module.exports = TodoStore
